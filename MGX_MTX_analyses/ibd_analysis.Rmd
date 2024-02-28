@@ -1,0 +1,158 @@
+---
+title: "ibd_analysis"
+author: "Angela Jiang"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(sjPlot)
+
+```
+
+## R Markdown
+
+### Read in files
+
+```{r read}
+ibd_mtx = read.csv("mtx_all.tsv", sep="\t")
+ibd_mgx = read.csv("diagnosis_new_mgx.tsv", sep="\t")
+```
+
+### Process data
+
+Removing duplicates, remove samples with <1mil reads, normalizing by calculating count per million
+
+```{r process}
+ibd_mtx <- unique(ibd_mtx[,c(2,3,4,5)])
+
+ibd_mgx <- unique(ibd_mgx[,c(2,3,4,5)])
+
+ibd_mtx_processed <- ibd_mtx %>%
+  filter(total_reads >= 5000000) %>%
+  mutate(cpm = total_mapped / total_reads * 1000000)
+
+ibd_mgx_processed <- ibd_mgx %>%
+  filter(total_reads >= 5000000) %>%
+  mutate(cpm = total_mapped / total_reads * 1000000)
+
+ibd_mtx_processed[ibd_mtx_processed == 0] <- 0.0001
+
+ibd_mgx_processed[ibd_mgx_processed == 0] <- 0.0001
+```
+
+### Normality test
+```{r normality, echo=FALSE}
+shapiro.test(ibd_mgx_processed$cpm)
+
+shapiro.test(ibd_mtx_processed$cpm)
+```
+
+### MGX plot
+
+Plotting MGX data
+
+```{r mgx_plot, echo=FALSE}
+p <- ggplot(ibd_mgx_processed, aes(x=diagnosis, y=cpm)) + 
+  geom_boxplot() +
+  ylab("log(cpm)") +
+  scale_y_log10() +
+  theme_classic()
+
+p
+
+save_plot("ibd_mgx.svg", fig = p, width=10, height=10)
+```
+
+### MTX plot
+
+Plotting MTX data
+
+```{r mtx_plot, echo=FALSE}
+t <- ggplot(ibd_mtx_processed, aes(x=diagnosis, y=cpm)) + 
+  geom_boxplot() +
+  ylab("log(cpm)") +
+  scale_y_log10() +
+  theme_classic()
+
+t
+
+save_plot("ibd_mtx.svg", fig = t, width=10, height=10)
+```
+### Filter data into comparison groups
+
+```{r mtx_stat, echo=FALSE}
+#MTX
+UCvsnonIBD_mtx <- ibd_mtx_processed %>%
+  filter(diagnosis == "UC" | diagnosis == "nonIBD")
+
+CDvsnonIBD_mtx <- ibd_mtx_processed %>%
+  filter(diagnosis == "CD" | diagnosis == "nonIBD")
+
+CDvsnonUC_mtx <- ibd_mtx_processed %>%
+  filter(diagnosis == "CD" | diagnosis == "UC")
+
+#MGX
+UCvsnonIBD_mgx <- ibd_mgx_processed %>%
+  filter(diagnosis == "UC" | diagnosis == "nonIBD")
+
+CDvsnonIBD_mgx <- ibd_mgx_processed %>%
+  filter(diagnosis == "CD" | diagnosis == "nonIBD")
+
+CDvsnonUC_mgx <- ibd_mgx_processed %>%
+  filter(diagnosis == "CD" | diagnosis == "UC")
+```
+
+## MTX stats
+### UC vs non-IBD MTX wilcox test
+
+```{r mtx_uc_nonibd, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = UCvsnonIBD_mtx,
+            exact = FALSE)
+```
+
+### CD vs non-IBD MTX wilcox test
+
+```{r mtx_cd_nonibd, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = CDvsnonIBD_mtx,
+            exact = FALSE)
+```
+
+### CD vs UC MTX wilcox test
+
+```{r mtx_cd_uc, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = CDvsnonUC_mtx,
+            exact = FALSE)
+```
+
+## MGX stats
+### UC vs non-IBD MGX wilcox test
+
+```{r mgx_uc_nonibd, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = UCvsnonIBD_mgx,
+            exact = FALSE)
+```
+
+### CD vs non-IBD MGX wilcox test
+
+```{r mgx_cd_nonibd, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = CDvsnonIBD_mgx,
+            exact = FALSE)
+```
+
+### CD vs UC MGX wilcox test
+
+```{r mgx_cd_uc, echo=FALSE}
+wilcox.test(total_mapped~ diagnosis, 
+            data = CDvsnonUC_mgx,
+            exact = FALSE)
+```
+
