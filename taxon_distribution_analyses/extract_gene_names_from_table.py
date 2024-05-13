@@ -1,7 +1,9 @@
+'''
+Script to process ProkFunFind blast_m6 output
+'''
 import pandas as pd
 import os
 
-# Directory containing the tables (CSV files in this example)
 directory_path = "significant_hits_garr"
 
 # Output file path for the extracted values
@@ -15,7 +17,6 @@ for filename in os.listdir(directory_path):
     if filename.endswith(".tsv"):  # Adjust the file extension as needed
         file_path = os.path.join(directory_path, filename)
 
-        # Read the table using pandas
         df = pd.read_csv(file_path,sep="\t")
         most_common_value = df['Cluster_ID'].value_counts().idxmax()
         df = df[df['Cluster_ID'] == most_common_value]

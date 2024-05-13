@@ -18,8 +18,8 @@ library(sjPlot)
 ### Read in files
 
 ```{r read}
-ibd_mtx = read.csv("mtx_all.tsv", sep="\t")
-ibd_mgx = read.csv("diagnosis_new_mgx.tsv", sep="\t")
+ibd_mtx = read.csv("Tables/mtx_total_diagnosis.tsv", sep="\t")
+ibd_mgx = read.csv("Tables/mgx_diagnosis.tsv", sep="\t")
 ```
 
 ### Process data
@@ -42,6 +42,9 @@ ibd_mgx_processed <- ibd_mgx %>%
 ibd_mtx_processed[ibd_mtx_processed == 0] <- 0.0001
 
 ibd_mgx_processed[ibd_mgx_processed == 0] <- 0.0001
+
+
+
 ```
 
 ### Normality test
@@ -57,14 +60,29 @@ Plotting MGX data
 
 ```{r mgx_plot, echo=FALSE}
 p <- ggplot(ibd_mgx_processed, aes(x=diagnosis, y=cpm)) + 
-  geom_boxplot() +
+  geom_point() +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
   ylab("log(cpm)") +
-  scale_y_log10() +
+  #scale_y_log10() +
+  theme_classic()
+
+p <- ggplot(ibd_mgx_processed, aes(x=diagnosis, y=cpm, fill=diagnosis)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+  scale_fill_brewer(palette = "Dark2") +
+    #scale_fill_viridis(discrete = TRUE) +
+    ggtitle("MGX") +
+    scale_y_log10() +
+    xlab("Diagnosis") +
+   ylab("log(cpm)") +
   theme_classic()
 
 p
 
-save_plot("ibd_mgx.svg", fig = p, width=10, height=10)
+#save_plot("ibd_mgx.svg", fig = p, width=10, height=10)
+ggsave(file="ibd_mgx.svg", plot=p, width=6, height=6)
+
+
 ```
 
 ### MTX plot
@@ -73,14 +91,25 @@ Plotting MTX data
 
 ```{r mtx_plot, echo=FALSE}
 t <- ggplot(ibd_mtx_processed, aes(x=diagnosis, y=cpm)) + 
-  geom_boxplot() +
+  geom_boxplot(fill="gray") +
   ylab("log(cpm)") +
   scale_y_log10() +
   theme_classic()
 
+t <- ggplot(ibd_mtx_processed, aes(x=diagnosis, y=cpm, fill=diagnosis)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+  scale_fill_brewer(palette = "Dark2") +
+    #scale_fill_viridis(discrete = TRUE) +
+    ggtitle("MTX") +
+    scale_y_log10() +
+    xlab("Diagnosis") +
+    ylab("cpm") +
+  theme_classic()
+
 t
 
-save_plot("ibd_mtx.svg", fig = t, width=10, height=10)
+ggsave(file="ibd_mtx.svg", plot=t, width=6, height=6)
 ```
 ### Filter data into comparison groups
 
@@ -110,7 +139,7 @@ CDvsnonUC_mgx <- ibd_mgx_processed %>%
 ### UC vs non-IBD MTX wilcox test
 
 ```{r mtx_uc_nonibd, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = UCvsnonIBD_mtx,
             exact = FALSE)
 ```
@@ -118,7 +147,7 @@ wilcox.test(total_mapped~ diagnosis,
 ### CD vs non-IBD MTX wilcox test
 
 ```{r mtx_cd_nonibd, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = CDvsnonIBD_mtx,
             exact = FALSE)
 ```
@@ -126,7 +155,7 @@ wilcox.test(total_mapped~ diagnosis,
 ### CD vs UC MTX wilcox test
 
 ```{r mtx_cd_uc, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = CDvsnonUC_mtx,
             exact = FALSE)
 ```
@@ -135,7 +164,7 @@ wilcox.test(total_mapped~ diagnosis,
 ### UC vs non-IBD MGX wilcox test
 
 ```{r mgx_uc_nonibd, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = UCvsnonIBD_mgx,
             exact = FALSE)
 ```
@@ -143,7 +172,7 @@ wilcox.test(total_mapped~ diagnosis,
 ### CD vs non-IBD MGX wilcox test
 
 ```{r mgx_cd_nonibd, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = CDvsnonIBD_mgx,
             exact = FALSE)
 ```
@@ -151,8 +180,142 @@ wilcox.test(total_mapped~ diagnosis,
 ### CD vs UC MGX wilcox test
 
 ```{r mgx_cd_uc, echo=FALSE}
-wilcox.test(total_mapped~ diagnosis, 
+wilcox.test(cpm~ diagnosis, 
             data = CDvsnonUC_mgx,
             exact = FALSE)
 ```
 
+
+```{r garL}
+ibd_mtx_garl = read.csv("Tables/mtx_gudl.tsv", sep="\t")
+ibd_mgx_garl = read.csv("Tables/gudl_diagnosis_mgx.tsv", sep="\t")
+
+
+```
+
+```{r garL}
+ibd_mtx_garl = merge(ibd_mtx_garl,ibd_mtx, by="External.ID")
+
+ibd_mgx_garl = merge(ibd_mgx_garl,ibd_mgx, by="External.ID")
+
+
+ibd_mtx_garl <- ibd_mtx_garl %>%
+  filter(total_reads >= 5000000) %>%
+  mutate(cpm = garl_reads / total_reads * 1000000)
+
+ibd_mgx_garl <- ibd_mgx_garl %>%
+  filter(total_reads >= 5000000) %>%
+  mutate(cpm = garl_reads / total_reads * 1000000)
+
+ibd_mtx_garl[ibd_mtx_garl == 0] <- 0.0001
+
+ibd_mgx_garl[ibd_mgx_garl == 0] <- 0.0001
+
+```
+
+``` {r graph_mtx_garl}
+p <- ggplot(ibd_mtx_garl, aes(x=diagnosis.x, y=cpm, fill=diagnosis.x)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+  scale_fill_brewer(palette = "Dark2") +
+    #scale_fill_viridis(discrete = TRUE) +
+    ggtitle("MTX") +
+    scale_y_log10() +
+    xlab("Diagnosis") +
+    ylab("cpm") +
+  theme_classic()
+
+p
+
+p2 <- ggplot(ibd_mgx_garl, aes(x=diagnosis.x, y=cpm, fill=diagnosis.x)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+  scale_fill_brewer(palette = "Dark2") +
+    #scale_fill_viridis(discrete = TRUE) +
+    ggtitle("MTX") +
+    scale_y_log10() +
+    xlab("Diagnosis") +
+    ylab("cpm") +
+  theme_classic()
+
+p2
+
+ggsave(file="ibd_mgx_garl.svg", plot=p2, width=6, height=6)
+ggsave(file="ibd_mtx_garl.svg", plot=p, width=6, height=6)
+
+
+```
+
+### Filter data into comparison groups
+
+```{r mtx_stat, echo=FALSE}
+#MTX
+UCvsnonIBD_mtx_garl <- ibd_mtx_garl %>%
+  filter(diagnosis.x == "UC" | diagnosis.x == "nonIBD")
+
+CDvsnonIBD_mtx_garl <- ibd_mtx_garl %>%
+  filter(diagnosis.x == "CD" | diagnosis.x == "nonIBD")
+
+CDvsnonUC_mtx_garl <- ibd_mtx_garl %>%
+  filter(diagnosis.x == "CD" | diagnosis.x == "UC")
+
+#MGX
+UCvsnonIBD_mgx_garl <- ibd_mgx_garl %>%
+  filter(diagnosis.x == "UC" | diagnosis.x == "nonIBD")
+
+CDvsnonIBD_mgx_garl <- ibd_mgx_garl %>%
+  filter(diagnosis.x == "CD" | diagnosis.x == "nonIBD")
+
+CDvsnonUC_mgx_garl <- ibd_mgx_garl %>%
+  filter(diagnosis.x == "CD" | diagnosis.x == "UC")
+```
+
+## MTX stats
+### UC vs non-IBD MTX wilcox test
+
+```{r mtx_uc_nonibd, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = UCvsnonIBD_mtx_garl,
+            exact = FALSE)
+```
+
+### CD vs non-IBD MTX wilcox test
+
+```{r mtx_cd_nonibd, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = CDvsnonIBD_mtx_garl,
+            exact = FALSE)
+```
+
+### CD vs UC MTX wilcox test
+
+```{r mtx_cd_uc, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = CDvsnonUC_mtx_garl,
+            exact = FALSE)
+```
+
+## MGX stats
+### UC vs non-IBD MGX wilcox test
+
+```{r mgx_uc_nonibd, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = UCvsnonIBD_mgx_garl,
+            exact = FALSE)
+```
+
+### CD vs non-IBD MGX wilcox test
+
+```{r mgx_cd_nonibd, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = CDvsnonIBD_mgx_garl,
+            exact = FALSE)
+```
+
+### CD vs UC MGX wilcox test
+
+```{r mgx_cd_uc, echo=FALSE}
+wilcox.test(cpm~ diagnosis.x, 
+            data = CDvsnonUC_mgx_garl,
+            exact = FALSE)
+```
