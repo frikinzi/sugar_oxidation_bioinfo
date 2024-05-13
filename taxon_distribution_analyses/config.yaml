@@ -1,0 +1,43 @@
+---
+main:
+  detect_tool: hmmer
+  cluster_tool: DBSCAN
+  faa_suffix: .gff.proteome.faa
+  gff_suffix: .gff
+  fna_suffix: .fna
+hmmer: 
+  hmmer_query: /data/Irp-jiang/share/akjiang/ProkFunFind/gudgar_hmm/gudgar.hmm
+  hmmer_exec: hmmscan
+  hmmer_threads: 1
+  evalue: 1e-3
+DBSCAN:
+  cluster_eps: 4
+  cluster_min_samples: 1
+---
+name: GarD pathway
+presence: essential
+components:
+- geneID: GarD_or_GudD
+  presence: essential
+  terms:
+  - id: gard_for_hmm_aligned_aligned_cleaned
+    method: hmmer
+    evalue: 1e-100
+  - id: gudd_for_hmm_aligned_aligned_cleaned
+    method: hmmer
+    evalue: 1e-100
+- geneID: GarR
+  presence: essential
+  terms:
+  - id: garr_for_hmm_aligned_aligned_cleaned
+    method: hmmer
+    evalue: 1e-100
+- geneID: GarL
+  presence: essential
+  terms:
+  - id: garl_for_hmm_aligned_aligned_cleaned
+    method: hmmer
+    evalue: 1e-100 
+  - id: gudl_for_hmm_aligned_aligned_cleaned
+    method: hmmer
+    evalue: 1e-100
