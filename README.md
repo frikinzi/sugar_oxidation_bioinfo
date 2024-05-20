@@ -1,4 +1,4 @@
-# sugar_oxidation_manuscript
+# Oxidized Sugars Manuscript Code
 Code for MGX and MTX analyses for sugar oxidation paper
 
 MGX_MTX_analyses/ contains scripts for readmapping and subsequent MGX and 
