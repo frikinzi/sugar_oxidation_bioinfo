@@ -1,5 +1,5 @@
 # Oxidized Sugars Manuscript Code
-Code for MGX and MTX analyses for sugar oxidation paper
+Code for MGX and MTX analyses for sugar oxidation paper, "Parallel evolution of oxidized sugar metabolism in commensal and pathogenic microbes exemplifies bacterial adaptation to the inflamed gut"
 
 MGX_MTX_analyses/ contains scripts for readmapping and subsequent MGX and 
 MTX analyses
