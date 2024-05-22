@@ -1,0 +1,3 @@
+Escherichia coli2	11341	GCA_003697165.2_01031	Escherichia coli	2285	3638	+	gudP
+Escherichia coli2	11341	GCA_003697165.2_01032	Escherichia coli	3639	4980	+	gudX
+Escherichia coli2	11341	GCA_003697165.2_01033	Escherichia coli	5000	6341	+	gudD

@@ -1,0 +1,8 @@
+Cetobacterium somerae	11518	GCA_000479045.1_02721	Cetobacterium somerae	2053	3082	+	garABC
+Cetobacterium somerae	11518	GCA_000479045.1_02722	Cetobacterium somerae	3091	3493	+	garABC
+Cetobacterium somerae	11518	GCA_000479045.1_02723	Cetobacterium somerae	3505	5029	+	garABC
+Cetobacterium somerae	11518	GCA_000479045.1_02724	Cetobacterium somerae	5000	6518	+	garD
+Cetobacterium somerae	11518	GCA_000479045.1_02725	Cetobacterium somerae	6567	7893	+	gudD
+Cetobacterium somerae	11518	GCA_000479045.1_02726	Cetobacterium somerae	7907	8795	+	COG2084
+Cetobacterium somerae	11518	GCA_000479045.1_02727	Cetobacterium somerae	8821	9721	+	gudL
+Cetobacterium somerae	11518	GCA_000479045.1_02728	Cetobacterium somerae	9724	10873	+	garK

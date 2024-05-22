@@ -1,0 +1,10 @@
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01091	Enterocloster_clostridioformis	0	794	+	garR
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01092	Enterocloster_clostridioformis	828	1728	+	gudL
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01093	Enterocloster_clostridioformis	1782	2712	-	COG0583
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01094	Enterocloster_clostridioformis	3100	4456	+	gudD
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01095	Enterocloster_clostridioformis	4492	4990	+	garABC
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01096	Enterocloster_clostridioformis	5000	6524	+	garABC
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01097	Enterocloster_clostridioformis	6670	7717	+	garABC
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01098	Enterocloster_clostridioformis	7797	8700	-	COG0583
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01099	Enterocloster_clostridioformis	8914	10432	+	garD
+Enterocloster_clostridioformis	11524	GCA_020297485.1_01100	Enterocloster_clostridioformis	10741	11524	+	gudD

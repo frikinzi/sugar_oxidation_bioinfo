@@ -1,0 +1,5 @@
+Chimaeribacter arupi	11566	GCA_002858805.1_02227	Chimaeribacter arupi	5000	6566	+	garD
+Chimaeribacter arupi	11566	GCA_002858805.1_02228	Chimaeribacter arupi	3177	4578	-	gudD
+Chimaeribacter arupi	11566	GCA_002858805.1_02229	Chimaeribacter arupi	2381	3149	-	garL
+Chimaeribacter arupi	11566	GCA_002858805.1_02230	Chimaeribacter arupi	1428	2313	-	garR
+Chimaeribacter arupi	11566	GCA_002858805.1_02231	Chimaeribacter arupi	184	1342	-	garK

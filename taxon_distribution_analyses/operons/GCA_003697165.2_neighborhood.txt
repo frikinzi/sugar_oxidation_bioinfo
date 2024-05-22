@@ -1,0 +1,9 @@
+Escherichia coli	10771	GCA_003697165.2_00590	Escherichia coli	0	580	-	COG4573
+Escherichia coli	10771	GCA_003697165.2_00591	Escherichia coli	828	1653	+	COG1349
+Escherichia coli	10771	GCA_003697165.2_00592	Escherichia coli	1704	3276	-	garD
+Escherichia coli	10771	GCA_003697165.2_00593	Escherichia coli	3650	4985	+	garP
+Escherichia coli	10771	GCA_003697165.2_00594	Escherichia coli	5000	5771	+	garL
+Escherichia coli	10771	GCA_003697165.2_00595	Escherichia coli	5800	6691	+	garR
+Escherichia coli	10771	GCA_003697165.2_00596	Escherichia coli	6787	7933	+	garK
+Escherichia coli	10771	GCA_003697165.2_00597	Escherichia coli	9440	10379	+	COG0583
+Escherichia coli	10771	GCA_003697165.2_00598	Escherichia coli	10471	10771	+	COG1171

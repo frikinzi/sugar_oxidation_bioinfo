@@ -1,0 +1,4 @@
+Salmonella enterica2	11341	GCA_000006945.2_02975	Salmonella enterica	6418	7561	+	garK
+Salmonella enterica2	11341	GCA_000006945.2_02976	Salmonella enterica	5000	6341	+	gudD
+Salmonella enterica2	11341	GCA_000006945.2_02977	Salmonella enterica	3639	4980	+	gudX
+Salmonella enterica2	11341	GCA_000006945.2_02978	Salmonella enterica	2284	3643	+	gudP

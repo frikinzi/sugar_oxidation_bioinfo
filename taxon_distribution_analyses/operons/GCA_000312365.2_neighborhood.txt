@@ -1,0 +1,5 @@
+Anaerococcus provencensis	11329	GCA_000312365.2_00643	Anaerococcus provencensis	2572	4084	+	garD
+Anaerococcus provencensis	11329	GCA_000312365.2_00644	Anaerococcus provencensis	4114	5023	+	garR
+Anaerococcus provencensis	11329	GCA_000312365.2_00645	Anaerococcus provencensis	5000	6329	+	gudD
+Anaerococcus provencensis	11329	GCA_000312365.2_00646	Anaerococcus provencensis	6338	7244	+	gudL
+Anaerococcus provencensis	11329	GCA_000312365.2_00647	Anaerococcus provencensis	7243	8395	+	garK

@@ -1,0 +1,4 @@
+Salmonella enterica	10771	GCA_000006945.2_03266	Salmonella enterica	6784	7930	+	garK
+Salmonella enterica	10771	GCA_000006945.2_03267	Salmonella enterica	5796	6687	+	garR
+Salmonella enterica	10771	GCA_000006945.2_03268	Salmonella enterica	5000	5771	+	garL
+Salmonella enterica	10771	GCA_000006945.2_03269	Salmonella enterica	2899	4471	-	garD

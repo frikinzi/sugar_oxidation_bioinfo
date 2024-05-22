@@ -1,24 +1,21 @@
 library(ggplot2)
 library(gggenes)
 
-genes <- read.table("/Users/angela/Downloads/GCA_000312365.2_neighborhood.txt", header=FALSE, sep="\t",
+genes <- read.table("operons/GCA_000312365.2_neighborhood.txt", header=FALSE, sep="\t",
                     col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
 
-genes2 <- read.table("/Users/angela/Downloads/GCA_002858805.1_neighborhood.txt", header=FALSE, sep="\t",
+genes2 <- read.table("operons/GCA_002858805.1_neighborhood.txt", header=FALSE, sep="\t",
                     col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
-gene3 <- read.table("/Users/angela/Downloads/GCA_000479045.1_neighborhood.txt", header=FALSE, sep="\t",
+gene3 <- read.table("operons/GCA_000479045.1_neighborhood.txt", header=FALSE, sep="\t",
                     col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
 
-gene4 <- read.table("/Users/angela/Downloads/C_clos.neighborhood.txt",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
-#gene4 <- read.table("/Users/angela/Downloads/C_clos.neighborhood.txt", header=FALSE, sep="\t",
-                    #col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
+gene4 <- read.table("operons/C_clos.neighborhood.txt",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
+gene5 <- read.table("operons/GCA_003697165.2_neighborhood.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
+ecoli_operon2 <-read.table("operons/e_coli_operon2.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
 
-gene5 <- read.table("/Users/angela/Downloads/GCA_003697165.2_neighborhood.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
-ecoli_operon2 <-read.table("/Users/angela/Downloads/e_coli_operon2.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
+gene6 <- read.table("operons/salmonella_neighborhood.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
 
-gene6 <- read.table("/Users/angela/Downloads/salmonella_neighborhood.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
-
-gene7 <- read.table("/Users/angela/Downloads/salmonella_operon2.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
+gene7 <- read.table("operons/salmonella_operon2.txt",sep="\t",header=FALSE,col.names=c("Organism", "Query_Length", "Subject_ID", "Subject_Operon", "Start", "End", "Strand", "Annotation"))
 
 
 combined_df <- rbind(genes, genes2, gene3, gene4, gene5,ecoli_operon2,gene6, gene7)
