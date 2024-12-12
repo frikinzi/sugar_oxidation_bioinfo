@@ -18,8 +18,8 @@ library(sjPlot)
 ### Read in files
 
 ```{r read}
-ibd_mtx = read.csv("Tables/mtx_total_diagnosis.tsv", sep="\t")
-ibd_mgx = read.csv("Tables/mgx_diagnosis.tsv", sep="\t")
+ibd_mtx = read.csv("Tables/Supplemental_Table_5.tsv", sep="\t")
+ibd_mgx = read.csv("Tables/Supplemental_Table_4.tsv", sep="\t")
 ```
 
 ### Process data
@@ -27,9 +27,9 @@ ibd_mgx = read.csv("Tables/mgx_diagnosis.tsv", sep="\t")
 Removing duplicates, remove samples with <1mil reads, normalizing by calculating count per million
 
 ```{r process}
-ibd_mtx <- unique(ibd_mtx[,c(2,3,4,5)])
+#ibd_mtx <- unique(ibd_mtx[,c(2,3,4,5)])
 
-ibd_mgx <- unique(ibd_mgx[,c(2,3,4,5)])
+#ibd_mgx <- unique(ibd_mgx[,c(2,3,4,5)])
 
 ibd_mtx_processed <- ibd_mtx %>%
   filter(total_reads >= 5000000) %>%
@@ -37,7 +37,7 @@ ibd_mtx_processed <- ibd_mtx %>%
 
 ibd_mgx_processed <- ibd_mgx %>%
   filter(total_reads >= 5000000) %>%
-  mutate(cpm = total_mapped / total_reads * 1000000)
+  mutate(cpm = gudgar_mapped / total_reads * 1000000)
 
 ibd_mtx_processed[ibd_mtx_processed == 0] <- 0.0001
 
@@ -59,28 +59,22 @@ shapiro.test(ibd_mtx_processed$cpm)
 Plotting MGX data
 
 ```{r mgx_plot, echo=FALSE}
-p <- ggplot(ibd_mgx_processed, aes(x=diagnosis, y=cpm)) + 
-  geom_point() +
-  geom_jitter(position = position_jitter(width = 0.1, height = 0.1))+
-  ylab("log(cpm)") +
-  #scale_y_log10() +
-  theme_classic()
-
 p <- ggplot(ibd_mgx_processed, aes(x=diagnosis, y=cpm, fill=diagnosis)) +
-    geom_violin(width=1) +
-    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+    geom_violin(width=1, alpha=0.5) +
+  geom_jitter(aes(color=diagnosis), width=0.2, size=2, alpha=0.8, shape=21, color="black") +
+  geom_boxplot(width=0.1, color="black", alpha=0.2, outlier.shape = NA) +
   scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2") +
     #scale_fill_viridis(discrete = TRUE) +
-    ggtitle("MGX") +
+    ggtitle("MTX") +
     scale_y_log10() +
     xlab("Diagnosis") +
-   ylab("log(cpm)") +
+    ylab("log(cpm)") +
   theme_classic()
 
 p
 
-#save_plot("ibd_mgx.svg", fig = p, width=10, height=10)
-ggsave(file="ibd_mgx.svg", plot=p, width=6, height=6)
+ggsave(file="Plots/ibd_mgx_gudl.svg", plot=p, width=6, height=6)
 
 
 ```
@@ -90,26 +84,22 @@ ggsave(file="ibd_mgx.svg", plot=p, width=6, height=6)
 Plotting MTX data
 
 ```{r mtx_plot, echo=FALSE}
-t <- ggplot(ibd_mtx_processed, aes(x=diagnosis, y=cpm)) + 
-  geom_boxplot(fill="gray") +
-  ylab("log(cpm)") +
-  scale_y_log10() +
-  theme_classic()
-
 t <- ggplot(ibd_mtx_processed, aes(x=diagnosis, y=cpm, fill=diagnosis)) +
-    geom_violin(width=1) +
-    geom_boxplot(width=0.1, color="grey", alpha=0.2, outlier.shape = NA) +
+    geom_violin(width=1, alpha=0.5) +
+  geom_jitter(aes(color=diagnosis), width=0.2, size=2, alpha=0.8, shape=21, color="black") +
+  geom_boxplot(width=0.1, color="black", alpha=0.2, outlier.shape = NA) +
   scale_fill_brewer(palette = "Dark2") +
+  scale_color_brewer(palette = "Dark2") +
     #scale_fill_viridis(discrete = TRUE) +
     ggtitle("MTX") +
     scale_y_log10() +
     xlab("Diagnosis") +
-    ylab("cpm") +
+    ylab("log(cpm)") +
   theme_classic()
 
 t
 
-ggsave(file="ibd_mtx.svg", plot=t, width=6, height=6)
+ggsave(file="Plots/ibd_mtx_gudl.svg", plot=t, width=6, height=6)
 ```
 ### Filter data into comparison groups
 
@@ -147,9 +137,11 @@ wilcox.test(cpm~ diagnosis,
 ### CD vs non-IBD MTX wilcox test
 
 ```{r mtx_cd_nonibd, echo=FALSE}
-wilcox.test(cpm~ diagnosis, 
-            data = CDvsnonIBD_mtx,
-            exact = FALSE)
+result <- wilcox.test(cpm~ diagnosis, 
+            data = CDvsnonIBD_mtx)
+
+formatted_pval <- format.pval(result$p.value, digits = 20)
+
 ```
 
 ### CD vs UC MTX wilcox test
@@ -240,8 +232,7 @@ p2 <- ggplot(ibd_mgx_garl, aes(x=diagnosis.x, y=cpm, fill=diagnosis.x)) +
 
 p2
 
-ggsave(file="ibd_mgx_garl.svg", plot=p2, width=6, height=6)
-ggsave(file="ibd_mtx_garl.svg", plot=p, width=6, height=6)
+ggsave(file="Plots/ibd_mgx_garl.svg", plot=p2, width=6, height=6)
 
 
 ```
