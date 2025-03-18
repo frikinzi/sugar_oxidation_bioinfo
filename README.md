@@ -10,4 +10,4 @@ taxon_distribution_analyses/ contains scripts and config files for running ProkF
 strain_specificity/ contains an R script for generating Supplementary Figure 2 and the associated tables and phylogenies
 
 # Citation
-TBD
+Levy, S., **Jiang, A.K.**, Grant, M.R. et al. Convergent evolution of oxidized sugar metabolism in commensal and pathogenic microbes in the inflamed gut. *Nature Communications* 16, 1121 (2025).
