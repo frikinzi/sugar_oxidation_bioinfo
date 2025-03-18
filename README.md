@@ -1,5 +1,5 @@
 # Oxidized Sugars Manuscript Code
-Code for the Nature Communications paper, "Convergent evolution of oxidized sugar metabolism in commensal and pathogenic microbes in the inflamed gut" (Levy et al. 2024)
+Code for the Nature Communications paper, "Convergent evolution of oxidized sugar metabolism in commensal and pathogenic microbes in the inflamed gut" (Levy et al. 2025)
 
 MGX_MTX_analyses/ contains scripts for readmapping and subsequent MGX and 
 MTX analyses
